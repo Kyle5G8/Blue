@@ -1,7 +1,8 @@
 ////////////////////Ground Robot (blue)///////////////////
 /*
-8
-8
+git add Desktop/Blue
+git commit -m "Notes or something"
+git push -f origin master
 */
 //////////////////////////////////////////////////////////
 //Ros Setup
