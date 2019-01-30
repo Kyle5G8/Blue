@@ -6,7 +6,7 @@ git push -f origin master
 */
 //////////////////////////////////////////////////////////
 //Ros Setup
-
+//test shell upload
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/UInt16.h>
@@ -144,12 +144,14 @@ Servo deploy1;
 
 void setup()
 {
+  pinMode(13, OUTPUT);
   nh.initNode();
   pinMode(29, OUTPUT);
   pinMode(A6, INPUT);
   deploy1.attach(29);
-  front.begin(0, true);
-  front.configure(0);
+//  front.begin(0, true);
+//  front.configure(0);
+  Serial.begin(57600);
   Serial1.begin(115200);
   Serial2.begin(115200);
   Serial3.begin(115200);
@@ -192,21 +194,22 @@ void loop()
   uint16_t distl = left.getDistance();
   uint16_t strengthl = left.getRecentSignalStrength();
 
-  uint16_t distr = right.getDistance();
-  uint16_t strengthr = right.getRecentSignalStrength();
+  uint16_t distr = 1;//right.getDistance();
+  uint16_t strengthr = 1;//right.getRecentSignalStrength();
 
-  uint16_t distb = back.getDistance();
-  uint16_t strengthb = back.getRecentSignalStrength();
+  uint16_t distb = 1;//back.getDistance();
+  uint16_t strengthb = 1;//back.getRecentSignalStrength();
   //
-  if ( cal_cnt == 0 ) {
-    dist = front.distance();      // With bias correction
-  } else {
-    dist = front.distance(false); // Without bias correction
-  }
-  cal_cnt++;
-  cal_cnt = cal_cnt % 100;
+//  if ( cal_cnt == 0 ) {
+//    dist = front.distance();      // With bias correction
+//  } else {
+//    dist = front.distance(false); // Without bias correction
+//  }
+//  cal_cnt++;
+//  cal_cnt = cal_cnt % 100;
   //////////////////////////////////////////////////////////
   str_msg.data = mq5.PPM();
+  Serial.println(distl);
   LEFTMSG.data = distl;
   RIGHTMSG.data = distr;
   BACKMSG.data = distb;
