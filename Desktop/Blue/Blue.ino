@@ -10,6 +10,7 @@ git push -f origin master
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/UInt16.h>
+#include <std_msgs/Float32.h>
 ros::NodeHandle nh;
 //
 //Sensor Libraries
@@ -34,9 +35,9 @@ int VIS = 0;
 int V = 0;
 int I = 0;
 int Rs2i = 0;
-int IMU_X = 0;
-int IMU_Y = 0;
-int IMU_Z = 0;
+uint16_t IMU_X = 0;
+uint16_t IMU_Y = 0;
+uint16_t IMU_Z = 0;
 void s1Cb(const std_msgs::UInt16 &msg)
 {
   s1 = msg.data;
@@ -110,9 +111,9 @@ ros::Subscriber<std_msgs::UInt16> VISr("VIS", &VISN);
 ros::Subscriber<std_msgs::UInt16> Vr("V", &VN);
 ros::Subscriber<std_msgs::UInt16> Ir("I", &IN);
 ros::Subscriber<std_msgs::UInt16> Rs2ir("RSSI", &RSSIN);
-ros::Subscriber<std_msgs::UInt16> IMU_Xr("IMU_X", &IMUXN);
-ros::Subscriber<std_msgs::UInt16> IMU_Yr("IMU_Y", &IMUYN);
-ros::Subscriber<std_msgs::UInt16> IMU_Zr("IMU_Z", &IMUZN);
+ros::Subscriber<std_msgs::UInt16> IMU_Xr("/mavros/imu/data/orientation/x", &IMUXN);
+ros::Subscriber<std_msgs::UInt16> IMU_Yr("/mavros/imu/data/orientation/y", &IMUYN);
+ros::Subscriber<std_msgs::UInt16> IMU_Zr("/mavros/imu/data/orientation/z", &IMUZN);
 //////////ROS OUTPUT MESSAGES////////////////////////////
 std_msgs::UInt16 str_msg;//NATURAL GAS
 ros::Publisher NG("NG", &str_msg);
@@ -209,7 +210,6 @@ void loop()
 //  cal_cnt = cal_cnt % 100;
   //////////////////////////////////////////////////////////
   str_msg.data = mq5.PPM();
-  Serial.println(distl);
   LEFTMSG.data = distl;
   RIGHTMSG.data = distr;
   BACKMSG.data = distb;
