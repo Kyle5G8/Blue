@@ -35,9 +35,7 @@ int VIS = 0;
 int V = 0;
 int I = 0;
 int Rs2i = 0;
-uint16_t IMU_X = 0;
-uint16_t IMU_Y = 0;
-uint16_t IMU_Z = 0;
+
 void s1Cb(const std_msgs::UInt16 &msg)
 {
   s1 = msg.data;
@@ -86,18 +84,6 @@ void RSSIN(const std_msgs::UInt16 &msg)
 {
   Rs2i = msg.data;
 }
-void IMUXN(const std_msgs::UInt16 &msg)
-{
-  IMU_X = msg.data;
-}
-void IMUYN(const std_msgs::UInt16 &msg)
-{
-  IMU_Y = msg.data;
-}
-void IMUZN(const std_msgs::UInt16 &msg)
-{
-  IMU_Z = msg.data;
-}
 //Ros subscribers
 ros::Subscriber<std_msgs::UInt16> s1r("S1", &s1Cb);
 ros::Subscriber<std_msgs::UInt16> s2r("S2", &s2Cb);
@@ -111,9 +97,6 @@ ros::Subscriber<std_msgs::UInt16> VISr("VIS", &VISN);
 ros::Subscriber<std_msgs::UInt16> Vr("V", &VN);
 ros::Subscriber<std_msgs::UInt16> Ir("I", &IN);
 ros::Subscriber<std_msgs::UInt16> Rs2ir("RSSI", &RSSIN);
-ros::Subscriber<std_msgs::UInt16> IMU_Xr("/mavros/imu/data/orientation/x", &IMUXN);
-ros::Subscriber<std_msgs::UInt16> IMU_Yr("/mavros/imu/data/orientation/y", &IMUYN);
-ros::Subscriber<std_msgs::UInt16> IMU_Zr("/mavros/imu/data/orientation/z", &IMUZN);
 //////////ROS OUTPUT MESSAGES////////////////////////////
 std_msgs::UInt16 str_msg;//NATURAL GAS
 ros::Publisher NG("NG", &str_msg);
@@ -176,9 +159,6 @@ void setup()
   nh.subscribe(Vr);
   nh.subscribe(Ir);
   nh.subscribe(Rs2ir);
-  nh.subscribe(IMU_Xr);
-  nh.subscribe(IMU_Yr);
-  nh.subscribe(IMU_Zr);
   mq5.Cal();
   left.begin(&Serial1);
   right.begin(&Serial2);
