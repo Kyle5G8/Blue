@@ -17,6 +17,7 @@ ros::NodeHandle nh;
 #include "MQ5.h"
 #include "TFMini.h"
 #include "LIDARLite.h"
+#include "Platform.h"
 //
 //External Hardware Libraries
 #include "Servo.h"
@@ -117,6 +118,7 @@ std_msgs::UInt16 HUMSG;//Humidity
 ros::Publisher HU("HU", &HUMSG);
 /////////////////////////////////////////////////////////
 //////////HARDWARE INITIALIZATIONS/////////////////////////
+Platform blue;
 MQ5 mq5;
 TFMini left;
 TFMini right;
@@ -141,6 +143,7 @@ void setup()
   Serial3.begin(115200);
   Serial4.begin(9600);
   mq5.attachPin(A6);
+  blue.attachPins(29,30);
   nh.advertise(NG);
   nh.advertise(LR);
   nh.advertise(RR);
@@ -175,11 +178,11 @@ void loop()
   uint16_t distl = left.getDistance();
   uint16_t strengthl = left.getRecentSignalStrength();
 
-  uint16_t distr = 1;//right.getDistance();
-  uint16_t strengthr = 1;//right.getRecentSignalStrength();
+  uint16_t distr = right.getDistance();
+  uint16_t strengthr = right.getRecentSignalStrength();
 
-  uint16_t distb = 1;//back.getDistance();
-  uint16_t strengthb = 1;//back.getRecentSignalStrength();
+  uint16_t distb = back.getDistance();
+  uint16_t strengthb = back.getRecentSignalStrength();
   //
 //  if ( cal_cnt == 0 ) {
 //    dist = front.distance();      // With bias correction
