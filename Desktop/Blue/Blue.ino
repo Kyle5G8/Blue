@@ -1,10 +1,10 @@
-////////////////////Ground Robot (blue)///////////////////
+////////////////////Ground Robot (blue)////////////////////
 /*
 git add Desktop/Blue
 git commit -m "Notes or something"
 git push -f origin master
 */
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 //Ros Setup
 //test shell upload
 #include <ros.h>
@@ -143,7 +143,7 @@ void setup()
   Serial3.begin(115200);
   Serial4.begin(9600);
   mq5.attachPin(A6);
-  blue.attachPins(29,30);
+  //blue.attachPins(29,30);
   nh.advertise(NG);
   nh.advertise(LR);
   nh.advertise(RR);
@@ -174,7 +174,7 @@ void loop()
   delay(15);
   int dist;
   int hum;
-  //READ RANGES/////////////////////////////////////////////
+////READ RANGES/////////////////////////////////////////////
   uint16_t distl = left.getDistance();
   uint16_t strengthl = left.getRecentSignalStrength();
 
@@ -183,15 +183,15 @@ void loop()
 
   uint16_t distb = back.getDistance();
   uint16_t strengthb = back.getRecentSignalStrength();
-  //
+//
 //  if ( cal_cnt == 0 ) {
-//    dist = front.distance();      // With bias correction
+//    dist = front.distance();
 //  } else {
-//    dist = front.distance(false); // Without bias correction
+//    dist = front.distance(false);
 //  }
 //  cal_cnt++;
 //  cal_cnt = cal_cnt % 100;
-  //////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
   str_msg.data = mq5.PPM();
   LEFTMSG.data = distl;
   RIGHTMSG.data = distr;
@@ -205,4 +205,6 @@ void loop()
   RR.publish( &RIGHTMSG );
   BR.publish( &BACKMSG );
   nh.spinOnce();
+
+  
 }
